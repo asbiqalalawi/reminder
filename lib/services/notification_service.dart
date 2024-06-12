@@ -72,12 +72,21 @@ class NotificationService {
     );
   }
 
+  Future<void> showNotification(int id, String title, String description) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: false,
+    );
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(id, title, description, platformChannelSpecifics);
+  }
+
   Future<void> cancelNotification(int id) async {
     final List<PendingNotificationRequest> pendingNotifications =
         await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-    pendingNotifications.map(
-      (e) => print(e.id),
-    );
     final canceledNotification = pendingNotifications.firstWhere((e) => e.id == id);
     await flutterLocalNotificationsPlugin.cancel(canceledNotification.id);
   }

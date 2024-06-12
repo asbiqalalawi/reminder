@@ -30,7 +30,8 @@ class DatabaseHelper {
         title TEXT,
         notes TEXT,
         time TEXT,
-        location TEXT
+        latitude REAL, 
+        longitude REAL
       )
     ''');
   }
@@ -46,6 +47,21 @@ class DatabaseHelper {
     return List.generate(reminders.length, (i) {
       return ReminderModel.fromMap(reminders[i]);
     });
+  }
+
+  Future<ReminderModel?> getReminderById(int id) async {
+    Database db = await database;
+    List<Map<String, dynamic>> maps = await db.query(
+      'reminders',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return ReminderModel.fromMap(maps.first);
+    } else {
+      return null;
+    }
   }
 
   Future<int> deleteReminder(int id) async {

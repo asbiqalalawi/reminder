@@ -3,14 +3,16 @@ class ReminderModel {
   final DateTime time;
   final String title;
   final String? notes;
-  final String? location;
+  final double? latitude;
+  final double? longitude;
 
   ReminderModel({
     required this.id,
     required this.time,
     required this.title,
     required this.notes,
-    this.location,
+    this.latitude,
+    this.longitude,
   });
 
   factory ReminderModel.fromMap(Map<String, dynamic> map) {
@@ -19,7 +21,8 @@ class ReminderModel {
       time: DateTime.tryParse(map['time']) ?? DateTime.now(),
       title: map['title'],
       notes: map['notes'],
-      location: map['location'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
     );
   }
 }

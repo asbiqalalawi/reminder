@@ -36,7 +36,8 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
           'time': reminder.time.toIso8601String(),
           'title': reminder.title,
           'notes': reminder.notes,
-          'location': reminder.location,
+          'latitude': reminder.latitude,
+          'longitude': reminder.longitude,
         };
         await dbHelper.insertReminder(reminderDb);
 
