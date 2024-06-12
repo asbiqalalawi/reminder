@@ -33,17 +33,20 @@ class _ReminderPageState extends State<ReminderPage> {
       body: BlocBuilder<ReminderBloc, ReminderState>(
         builder: (context, state) {
           if (state is RemindersLoaded) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                context.read<ReminderBloc>().add(LoadReminders());
-              },
-              child: ListView.separated(
-                padding: const EdgeInsets.all(20),
-                itemCount: state.reminders.length,
-                itemBuilder: (context, index) => ReminderCard(reminder: state.reminders[index]),
-                separatorBuilder: (context, index) => const SizedBox(height: 10),
-              ),
-            );
+            if (state.reminders.isNotEmpty) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<ReminderBloc>().add(LoadReminders());
+                },
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(20),
+                  itemCount: state.reminders.length,
+                  itemBuilder: (context, index) => ReminderCard(reminder: state.reminders[index]),
+                  separatorBuilder: (context, index) => const SizedBox(height: 10),
+                ),
+              );
+            }
+            return const Center(child: Text('Please add some reminders'));
           }
           return const Center(
             child: CircularProgressIndicator(),

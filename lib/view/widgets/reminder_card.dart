@@ -58,7 +58,7 @@ class ReminderCard extends StatelessWidget {
         key: ValueKey(reminder),
         onDismissed: (_) {
           BlocProvider.of<ReminderBloc>(context).add(
-            DeleteReminder(reminder.id),
+            DeleteReminder(reminder),
           );
         },
         child: Container(

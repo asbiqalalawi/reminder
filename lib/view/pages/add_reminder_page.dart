@@ -28,7 +28,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
       appBar: AppBar(
         title: const Text('Add Reminder'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
           key: _formKey,

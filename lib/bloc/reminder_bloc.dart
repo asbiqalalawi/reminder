@@ -57,8 +57,10 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
 
     on<DeleteReminder>((event, emit) async {
       emit(ReminderLoading());
-      await service.cancelNotification(event.id);
-      await dbHelper.deleteReminder(event.id);
+      if (event.reminder.time.isAfter(DateTime.now())) {
+        await service.cancelNotification(event.reminder.id);
+      }
+      await dbHelper.deleteReminder(event.reminder.id);
       final reminders = await dbHelper.queryAllReminders();
       emit(RemindersLoaded(reminders: reminders));
     });

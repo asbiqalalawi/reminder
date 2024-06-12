@@ -12,7 +12,7 @@ class AddReminder extends ReminderEvent {
 }
 
 class DeleteReminder extends ReminderEvent {
-  final int id;
+  final ReminderModel reminder;
 
-  DeleteReminder(this.id);
+  DeleteReminder(this.reminder);
 }
